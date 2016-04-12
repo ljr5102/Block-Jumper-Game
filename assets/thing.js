@@ -18,5 +18,5 @@ var Obstacle = function() {
   this.posY = 510;
   this.width = 20;
   this.height = 40;
-  this.speed = 5;
+  this.speed = Math.random() * 10;
 };
