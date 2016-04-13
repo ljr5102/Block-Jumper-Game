@@ -4,12 +4,14 @@ $(function(){
     this.el = document.getElementById('canvas');
     this.ctx = canvas.getContext('2d');
     var that = this;
+    this.score = 0;
     window.addEventListener("keydown", this.handleKeyEvent.bind(this));
     this.el.addEventListener("click", this.startGame.bind(this));
   };
 
   Game.prototype.startGame = function() {
     this.initializeGame();
+    document.getElementById('current-score').innerHTML = "Current Score: " + this.score;
     this.keyPressed = false;
     this.jumpStartTime = false;
     this.draw();
@@ -29,7 +31,6 @@ $(function(){
   Game.prototype.generateObstacles = function() {
     this.obstacles = [];
     for(var i = 0; i < 10; i++) {
-      console.log(this.obstacles.length);
       this.obstacles.push(new Obstacle());
     }
   };
@@ -60,7 +61,7 @@ $(function(){
       this.ball.yVel = this.ball.yVel + (9.8)*(delta / 100);
     }
     if(this.ball.hitGround()) {
-      this.ball.posY = 530;
+      this.ball.posY = 330;
       this.ball.yVel = -4;
       this.jumpStartTime = false;
       this.keyPressed = false;
@@ -73,13 +74,15 @@ $(function(){
   Game.prototype.checkObstaclePosition = function() {
     if (this.currentObstacle.posX + this.currentObstacle.width < 0) {
       this.currentObstacle = this.obstacles.shift();
+      this.score += 1;
+      document.getElementById('current-score').innerHTML = "Current Score: " + this.score;
       this.allCurrentObjects.pop();
       this.allCurrentObjects.push(this.currentObstacle);
     }
   };
 
   Game.prototype.moveObs = function(time) {
-    if (this.obstacles.length !== 0) {
+    if (this.obstacles.length >= 0) {
       var delta = (time - this.startTime) / 10;
       this.startTime = time;
       this.currentObstacle.posX = this.currentObstacle.posX - (this.currentObstacle.speed / delta);

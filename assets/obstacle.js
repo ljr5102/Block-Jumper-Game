@@ -1,7 +1,7 @@
 var Obstacle = function() {
   this.type = "Obstacle";
   this.posX = 800;
-  this.posY = 510;
+  this.posY = 310;
   this.width = 20;
   this.height = 40;
   this.speed = Math.random()*20 + 10;

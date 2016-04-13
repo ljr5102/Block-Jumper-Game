@@ -1,7 +1,7 @@
 var Ball = function() {
   this.type = "Ball";
   this.posX = 30;
-  this.posY = 530;
+  this.posY = 330;
   this.startAngle = 0,
   this.endAngle = 2*Math.PI;
   this.radius = 20;
@@ -14,6 +14,6 @@ Ball.prototype.draw = function(ctx) {
   ctx.fill();
 };
 
-Ball.prototype.hitGround = function(ground) {
-  return this.posY + this.radius > 550;
+Ball.prototype.hitGround = function() {
+  return this.posY + this.radius > 350;
 };
