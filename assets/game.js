@@ -5,22 +5,19 @@ $(function(){
     this.ctx = canvas.getContext('2d');
     var that = this;
     this.score = 0;
-    window.addEventListener("keydown", this.handleKeyEvent.bind(this));
     this.el.addEventListener("click", this.startGame.bind(this));
   };
 
   Game.prototype.startGame = function() {
-    this.initializeGame();
+    this.initializeGameObjects();
     document.getElementById('current-score').innerHTML = "Current Score: " + this.score;
-    this.keyPressed = false;
-    this.jumpStartTime = false;
+    window.addEventListener("keydown", this.handleKeyEvent.bind(this));
     this.draw();
-    this.el.removeEventListener('click', this.startGame.bind(this));
-    this.startTime = 0;
-    window.requestAnimationFrame(this.moveObs.bind(this));
+    this.lastTime = 0;
+    window.requestAnimationFrame(this.startAnimation.bind(this));
   };
 
-  Game.prototype.initializeGame = function() {
+  Game.prototype.initializeGameObjects = function() {
     this.ball = new Ball();
     this.plat = new Platform();
     this.generateObstacles();
@@ -36,7 +33,7 @@ $(function(){
   };
 
   Game.prototype.draw = function() {
-    this.ctx.clearRect(0, 0, 800, 600);
+    this.ctx.clearRect(0, 0, 800, 400);
     for(var i = 0; i < this.allCurrentObjects.length; i++) {
       var obj = this.allCurrentObjects[i];
       obj.draw(this.ctx);
@@ -44,32 +41,8 @@ $(function(){
   };
 
   Game.prototype.handleKeyEvent = function(e) {
-    // this.keyPresses.push(e.keyCode);
-    if (!this.keyPressed) {
-      this.keyPressed = true;
-      window.requestAnimationFrame(this.jump.bind(this));
-    }
+    this.ball.jump();
   };
-
-  Game.prototype.jump = function(time) {
-    if (!this.jumpStartTime) {
-      this.jumpStartTime = time;
-    } else {
-      var delta = (time - this.jumpStartTime) / 10;
-      this.jumpStartTime = time;
-      this.ball.posY = this.ball.posY + (this.ball.yVel * delta);
-      this.ball.yVel = this.ball.yVel + (9.8)*(delta / 100);
-    }
-    if(this.ball.hitGround()) {
-      this.ball.posY = 330;
-      this.ball.yVel = -4;
-      this.jumpStartTime = false;
-      this.keyPressed = false;
-      return;
-    }
-    window.requestAnimationFrame(this.jump.bind(this));
-  };
-
 
   Game.prototype.checkObstaclePosition = function() {
     if (this.currentObstacle.posX + this.currentObstacle.width < 0) {
@@ -81,20 +54,54 @@ $(function(){
     }
   };
 
-  Game.prototype.moveObs = function(time) {
-    if (this.obstacles.length >= 0) {
-      var delta = (time - this.startTime) / 10;
-      this.startTime = time;
-      this.currentObstacle.posX = this.currentObstacle.posX - (this.currentObstacle.speed / delta);
-      if(this.currentObstacle.isCollidedWith(this.ball)) {
-        return;
-      }
-      this.checkObstaclePosition();
-    } else {
-      return;
-    }
+  Game.prototype.renderGameOver = function() {
     this.draw();
-    window.requestAnimationFrame(this.moveObs.bind(this));
+    document.getElementById('current-score').innerHTML = "You Win!";
+  };
+
+  Game.prototype.checkCollisions = function() {
+    for(var i = 0; i < this.allCurrentObjects.length; i++) {
+      var obj1 = this.allCurrentObjects[i];
+      for (var j = 0; j < this.allCurrentObjects.length; j++) {
+        var obj2 = this.allCurrentObjects[j];
+        if (i === j) {
+
+        } else {
+          obj1.isCollidedWith(obj2);
+        }
+      }
+    }
+  };
+
+  Game.prototype.gameOver = function() {
+    if (this.obstacles.length === 0) {
+      return true;
+    } else {
+      return this.currentObstacle.collision;
+    }
+  };
+
+  Game.prototype.step = function(delta) {
+    for(var i = 0; i < this.allCurrentObjects.length; i++) {
+      var obj = this.allCurrentObjects[i];
+      obj.move(delta);
+    }
+    this.checkObstaclePosition();
+    this.checkCollisions();
+    // this.gameOver();
+  };
+
+
+  Game.prototype.startAnimation = function(time) {
+    var delta = time - this.lastTime;
+    this.step(delta);
+    this.draw();
+    this.lastTime = time;
+    if (!this.gameOver()) {
+      window.requestAnimationFrame(this.startAnimation.bind(this));
+    } else {
+      this.renderGameOver();
+    }
   };
 
   var newGame = new Game();

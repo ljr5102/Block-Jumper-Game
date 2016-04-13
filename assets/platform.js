@@ -9,3 +9,11 @@ var Platform = function() {
 Platform.prototype.draw = function(ctx) {
   ctx.fillRect(this.posX, this.posY, this.width, this.height);
 };
+
+Platform.prototype.move = function() {
+  return;
+};
+
+Platform.prototype.isCollidedWith = function(obj2) {
+  return;
+};
