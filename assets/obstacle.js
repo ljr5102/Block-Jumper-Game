@@ -1,11 +1,19 @@
-var Obstacle = function() {
+var Obstacle = function(speed) {
   this.type = "Obstacle";
   this.posX = 800;
   this.posY = 310;
   this.width = 20;
   this.height = 40;
-  this.speed = 200;
+  this.speed = speed;
   this.collision = false;
+};
+
+Obstacle.createRandomObstacles = function(level) {
+  if(level === 1 || level === 2) {
+    var speed = Math.floor(Math.random() * (51)) + 100;
+    var obstc = new Obstacle(speed);
+    return obstc;
+  }
 };
 
 Obstacle.prototype.draw = function(ctx) {

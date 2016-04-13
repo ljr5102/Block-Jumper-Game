@@ -10,7 +10,7 @@ Platform.prototype.draw = function(ctx) {
   ctx.fillRect(this.posX, this.posY, this.width, this.height);
 };
 
-Platform.prototype.move = function() {
+Platform.prototype.move = function(delta) {
   return;
 };
 
