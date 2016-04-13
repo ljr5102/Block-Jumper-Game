@@ -5,6 +5,7 @@ $(function(){
     this.ctx = canvas.getContext('2d');
     this.score = 0;
     this.level = 1;
+    this.tick = 0;
     this.el.addEventListener("click", this.startGame.bind(this));
   };
 
@@ -21,10 +22,9 @@ $(function(){
     this.ball = new Ball();
     this.plat = new Platform();
     this.generateObstacles();
-    this.aerials = [];
     this.generateAerials();
-    this.currentObstacle = this.obstacles.shift();
-    this.allCurrentObjects = [this.ball, this.plat, this.currentObstacle, this.aerials[0]];
+    // this.currentObstacle = this.obstacles.shift();
+    this.allCurrentObjects = [this.ball, this.plat, this.obstacles.shift()];
   };
 
   Game.prototype.generateObstacles = function() {
@@ -36,8 +36,9 @@ $(function(){
   };
 
   Game.prototype.generateAerials = function() {
-    if (this.aerials.length < 1) {
-      var aer = Aerial.createRandomAerials();
+    this.aerials = [];
+    for (var i = 0; i < 10; i++) {
+      var aer = Aerial.createRandomAerials(i);
       this.aerials.push(aer);
     }
   };
@@ -54,34 +55,67 @@ $(function(){
     this.ball.jump();
   };
 
-  Game.prototype.removeExitedObstacle = function() {
+  // Game.prototype.removeExitedObstacle = function() {
+  //   for (var i = 0; i < this.allCurrentObjects.length; i++) {
+  //     var currObj = this.allCurrentObjects[i];
+  //     if(currObj.type === "Obstacle") {
+  //       this.allCurrentObjects.splice(i, 1);
+  //       return;
+  //     }
+  //   }
+  // };
+
+  Game.prototype.checkOutOfBounds = function() {
     for (var i = 0; i < this.allCurrentObjects.length; i++) {
       var currObj = this.allCurrentObjects[i];
-      if(currObj.type === "Obstacle") {
-        this.allCurrentObjects.splice(i, 1);
-        return;
+      switch (currObj.type) {
+        case "Obstacle":
+          if (currObj.posX + currObj.width < 0) {
+            this.score += 1;
+            document.getElementById('current-score').innerHTML = "Current Score: " + this.score;
+            this.allCurrentObjects[i] = this.obstacles.shift();
+          }
+        break;
+        case "Aerial":
+          if (currObj.posX + currObj.width < 0) {
+            this.allCurrentObjects.splice(i, 1);
+            i -= 1;
+          }
+        break;
       }
     }
-  };
-
-  Game.prototype.checkObstaclePosition = function() {
-    if (this.currentObstacle.posX + this.currentObstacle.width < 0) {
-      this.currentObstacle = this.obstacles.shift();
-      this.score += 1;
-      document.getElementById('current-score').innerHTML = "Current Score: " + this.score;
-      this.removeExitedObstacle();
-      this.allCurrentObjects.push(this.currentObstacle);
-    }
+    // if (this.currentObstacle.posX + this.currentObstacle.width < 0) {
+    //   this.currentObstacle = this.obstacles.shift();
+    //   this.score += 1;
+    //   document.getElementById('current-score').innerHTML = "Current Score: " + this.score;
+    //   this.removeExitedObstacle();
+    //   this.allCurrentObjects.push(this.currentObstacle);
+    // }
   };
 
   Game.prototype.pushInAerials = function() {
-    this.generateAerials();
-    this.allCurrentObjects.concat(this.aerials);
+    if (this.tick === 100 && this.aerials.length > 0) {
+      this.allCurrentObjects.push(this.aerials.shift());
+      this.tick = 0;
+    } else if (this.aerials.length === 0) {
+      this.generateAerials();
+      this.tick = 99;
+    }
   };
 
   Game.prototype.renderGameOver = function() {
     this.draw();
+    if (window.localStorage.highscore) {
+      var highInt = parseInt(window.localStorage.highscore);
+      if (this.score > highInt) {
+        window.localStorage.setItem("highscore", this.score);
+      }
+    } else {
+        window.localStorage.setItem("highscore", this.score);
+    }
     document.getElementById('current-score').innerHTML = "You Win!";
+    var highScore = window.localStorage.highscore;
+    document.getElementById('high-score').innerHTML = "Your high score: " + highScore;
   };
 
   Game.prototype.checkCollisions = function() {
@@ -98,27 +132,43 @@ $(function(){
     }
   };
 
+  Game.prototype.checkForRemovals = function() {
+    for (var i = 0; i < this.allCurrentObjects.length; i++) {
+      var currObj = this.allCurrentObjects[i];
+      if (currObj.markForRemoval) {
+        this.allCurrentObjects.splice(i, 1);
+        i -= 1;
+      }
+    }
+  };
+
   Game.prototype.gameOver = function() {
     if (this.obstacles.length === 0) {
-      if (this.level === 2) {
+      if (this.level === 6) {
         return true;
       } else {
         this.level += 1;
         this.generateObstacles();
       }
     } else {
-      return this.currentObstacle.collision;
+      for (var i = 0; i < this.allCurrentObjects.length; i++) {
+        if (this.allCurrentObjects[i].type === "Obstacle") {
+          return this.allCurrentObjects[i].collision;
+        }
+      }
     }
   };
 
   Game.prototype.step = function(delta) {
+    this.tick += 1;
     for(var i = 0; i < this.allCurrentObjects.length; i++) {
       var obj = this.allCurrentObjects[i];
       obj.move(delta);
     }
-    this.checkObstaclePosition();
+    this.checkOutOfBounds();
     this.pushInAerials();
     this.checkCollisions();
+    this.checkForRemovals();
     // this.gameOver();
   };
 

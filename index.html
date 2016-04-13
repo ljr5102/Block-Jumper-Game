@@ -15,7 +15,14 @@
     <header>
       <h1>Block Jumper</h1>
       <div id="current-score"></div>
+      <div id="high-score"></div>
     </header>
     <canvas width="800" height="400" id="canvas"></canvas>
   </body>
+  <script type="text/javascript">
+    var high = window.localStorage.highscore;
+    if (high) {
+      document.getElementById('high-score').innerHTML = "Your high score: " + high;
+    }
+  </script>
 </html>

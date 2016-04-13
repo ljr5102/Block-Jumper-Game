@@ -4,9 +4,11 @@ var Platform = function() {
   this.posY = 350;
   this.width = 800;
   this.height = 50;
+  this.markForRemoval = false;
 };
 
 Platform.prototype.draw = function(ctx) {
+  ctx.fillStyle = 'green';
   ctx.fillRect(this.posX, this.posY, this.width, this.height);
 };
 
