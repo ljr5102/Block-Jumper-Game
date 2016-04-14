@@ -63,16 +63,19 @@ Obstacle.prototype.move = function(delta) {
   this.posX = this.posX - (this.speed / delta);
 };
 
+
+
 Obstacle.prototype.isCollidedWith = function(obj2) {
   if (obj2.type === "Ball") {
     if (this.posY > obj2.posY + obj2.radius) {
       return false;
     } else {
-      if (this.posX > (obj2.posX - obj2.radius) && this.posX < (obj2.posX + obj2.radius)) {
+      if (this.posX < obj2.posX + obj2.radius && obj2.posX + obj2.radius < this.posX + this.width) {
+        this.collision = true;
+      } else if (this.posX < obj2.posX - obj2.radius && obj2.posX - obj2.radius < this.posX + this.width) {
         this.collision = true;
       }
     }
     return false;
   }
-  // return;
 };

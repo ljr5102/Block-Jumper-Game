@@ -127,6 +127,7 @@ $(function(){
     }
     // document.getElementById('current-score').innerHTML = "You Win!";
     var highScore = window.localStorage.highscore;
+    this.score = 0;
     // document.getElementById('high-score').innerHTML = "Your high score: " + highScore;
   };
 
