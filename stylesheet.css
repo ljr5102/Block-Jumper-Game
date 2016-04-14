@@ -39,7 +39,8 @@ body {
   text-align: center;
 }
 
+/*http://orig12.deviantart.net/2aec/f/2008/046/b/b/bb795c6397e964ee.jpg*/
 #canvas {
-  background-image: url(http://orig12.deviantart.net/2aec/f/2008/046/b/b/bb795c6397e964ee.jpg);
+  background-image: url(./images/game_background.jpg);
   background-size: cover;
 }

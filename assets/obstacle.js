@@ -17,7 +17,8 @@ Obstacle.createRandomObstacles = function(level) {
   var heights;
   var random1;
   var random2;
-  var src2 = "http://res.freestockphotos.biz/pictures/10/10675-illustration-of-a-cartoon-cow-pv.png";
+  // http://res.freestockphotos.biz/pictures/10/10675-illustration-of-a-cartoon-cow-pv.png
+  var src2 = "images/cow_picture.png";
   var colors = ["red", "orange", "black"];
   var random3 = Math.floor(Math.random() * (3)) + 0;
   var color = colors[random3];

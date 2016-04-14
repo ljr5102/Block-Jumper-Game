@@ -19,7 +19,8 @@ Aerial.createRandomAerials = function() {
 
 Aerial.prototype.draw = function(ctx) {
   var img = new Image();
-  img.src = "http://www.somethingfishy.ie/resources/image_resources/image_cloud.png"
+  // http://www.somethingfishy.ie/resources/image_resources/image_cloud.png
+  img.src = "images/cloud_picture.png";
   ctx.fillStyle = "gray";
   ctx.drawImage(img, this.posX, this.posY, this.width, this.height);
   // ctx.fillRect(this.posX, this.posY, this.width, this.height);

@@ -13,7 +13,7 @@ $(function(){
   Game.prototype.renderIntroScreen = function() {
     this.ctx.fillStyle = "black";
     this.ctx.font = "italic "+60+"pt Arial Black";
-    this.ctx.fillText("CLOUD JUMPER", 40,200);
+    this.ctx.fillText("COW JUMPER", 40,200);
     var high = window.localStorage.highscore;
     if (high) {
       this.ctx.font = "italic "+40+"pt Arial Black";
