@@ -19,15 +19,20 @@ $(function(){
       this.ctx.font = "italic "+40+"pt Arial Black";
       this.ctx.fillText("High Score: " + high, 40,260);
     }
+    this.ctx.font = "italic " +20+"pt Arial Black";
+    this.ctx.fillText("Click anywhere to begin!", 40, 300);
   };
 
   Game.prototype.startGame = function() {
-    this.initializeGameObjects();
-    document.getElementById('current-score').innerHTML = "Current Score: " + this.score;
-    window.addEventListener("keydown", this.handleKeyEvent.bind(this));
-    this.draw();
-    this.lastTime = 0;
-    window.requestAnimationFrame(this.startAnimation.bind(this));
+    if (!this.started) {
+      this.started = true;
+      this.initializeGameObjects();
+      document.getElementById('current-score').innerHTML = "Current Score: " + this.score;
+      window.addEventListener("keydown", this.handleKeyEvent.bind(this));
+      this.draw();
+      this.lastTime = 0;
+      window.requestAnimationFrame(this.startAnimation.bind(this));
+    }
   };
 
   Game.prototype.initializeGameObjects = function() {
@@ -128,6 +133,9 @@ $(function(){
     // document.getElementById('current-score').innerHTML = "You Win!";
     var highScore = window.localStorage.highscore;
     this.score = 0;
+    this.level = 1;
+    this.tick = 0;
+    this.started = false;
     // document.getElementById('high-score').innerHTML = "Your high score: " + highScore;
   };
 
@@ -157,12 +165,8 @@ $(function(){
 
   Game.prototype.gameOver = function() {
     if (this.obstacles.length === 0) {
-      if (this.level === 6) {
-        return true;
-      } else {
-        this.level += 1;
-        this.generateObstacles();
-      }
+      this.level += 1;
+      this.generateObstacles();
     } else {
       for (var i = 0; i < this.allCurrentObjects.length; i++) {
         if (this.allCurrentObjects[i].type === "Obstacle") {

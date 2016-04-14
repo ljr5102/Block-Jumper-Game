@@ -1,7 +1,7 @@
-var Obstacle = function(speed, width, height, fill) {
+var Obstacle = function(speed, fill) {
   this.type = "Obstacle";
   this.posX = 800;
-  this.posY = 350 - 50;
+  this.posY = 300;
   this.width = 50;
   this.height = 50;
   this.speed = speed;
@@ -13,40 +13,39 @@ var Obstacle = function(speed, width, height, fill) {
 Obstacle.createRandomObstacles = function(level) {
   var speed;
   var obstc;
-  var widths;
-  var heights;
-  var random1;
-  var random2;
   // http://res.freestockphotos.biz/pictures/10/10675-illustration-of-a-cartoon-cow-pv.png
   var src2 = "images/cow_picture.png";
   var colors = ["red", "orange", "black"];
   var random3 = Math.floor(Math.random() * (3)) + 0;
   var color = colors[random3];
   if(level === 1 || level === 2) {
-    widths = [20, 25, 30];
-    heights = [40, 45, 50];
-    random1 = Math.floor(Math.random() * (3)) + 0;
-    random2 = Math.floor(Math.random() * (3)) + 0;
     speed = Math.floor(Math.random() * (51)) + 100;
-    obstc = new Obstacle(speed, widths[random1], heights[random2], color);
+    obstc = new Obstacle(speed, color);
     return obstc;
   }
   if(level === 3 || level === 4) {
-    widths = [30, 35, 40];
-    heights = [45, 50, 55];
-    random1 = Math.floor(Math.random() * (3)) + 0;
-    random2 = Math.floor(Math.random() * (3)) + 0;
     speed = Math.floor(Math.random() * (71)) + 120;
-    obstc = new Obstacle(speed, widths[random1], heights[random2], color);
+    obstc = new Obstacle(speed, color);
     return obstc;
   }
   if(level === 5 || level === 6) {
-    widths = [35, 40, 45];
-    heights = [50, 55, 60];
-    random1 = Math.floor(Math.random() * (3)) + 0;
-    random2 = Math.floor(Math.random() * (3)) + 0;
     speed = Math.floor(Math.random() * (91)) + 140;
-    obstc = new Obstacle(speed, widths[random1], heights[random2], color);
+    obstc = new Obstacle(speed, color);
+    return obstc;
+  }
+  if(level === 7 || level === 8) {
+    speed = Math.floor(Math.random() * (111)) + 160;
+    obstc = new Obstacle(speed, color);
+    return obstc;
+  }
+  if(level === 9 || level === 10) {
+    speed = Math.floor(Math.random() * (131)) + 180;
+    obstc = new Obstacle(speed, color);
+    return obstc;
+  }
+  if(level > 10) {
+    speed = Math.floor(Math.random() * (151)) + 200;
+    obstc = new Obstacle(speed, color);
     return obstc;
   }
 };
