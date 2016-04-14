@@ -3,7 +3,7 @@ var Aerial = function(posY, speed) {
   this.posX = 800;
   this.posY = posY;
   this.width = 100;
-  this.height = 20;
+  this.height = 30;
   this.speed = speed;
   this.markForRemoval = false;
 };
@@ -18,8 +18,11 @@ Aerial.createRandomAerials = function() {
 };
 
 Aerial.prototype.draw = function(ctx) {
+  var img = new Image();
+  img.src = "http://www.somethingfishy.ie/resources/image_resources/image_cloud.png"
   ctx.fillStyle = "gray";
-  ctx.fillRect(this.posX, this.posY, this.width, this.height);
+  ctx.drawImage(img, this.posX, this.posY, this.width, this.height);
+  // ctx.fillRect(this.posX, this.posY, this.width, this.height);
 };
 
 Aerial.prototype.move = function(delta) {

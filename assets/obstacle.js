@@ -1,9 +1,9 @@
 var Obstacle = function(speed, width, height, fill) {
   this.type = "Obstacle";
   this.posX = 800;
-  this.posY = 350 - height;
-  this.width = width;
-  this.height = height;
+  this.posY = 350 - 50;
+  this.width = 50;
+  this.height = 50;
   this.speed = speed;
   this.fill = fill;
   this.collision = false;
@@ -17,6 +17,7 @@ Obstacle.createRandomObstacles = function(level) {
   var heights;
   var random1;
   var random2;
+  var src2 = "http://res.freestockphotos.biz/pictures/10/10675-illustration-of-a-cartoon-cow-pv.png";
   var colors = ["red", "orange", "black"];
   var random3 = Math.floor(Math.random() * (3)) + 0;
   var color = colors[random3];
@@ -50,8 +51,11 @@ Obstacle.createRandomObstacles = function(level) {
 };
 
 Obstacle.prototype.draw = function(ctx) {
+  var img = new Image();
+  img.src = "http://res.freestockphotos.biz/pictures/10/10675-illustration-of-a-cartoon-cow-pv.png";
   ctx.fillStyle = this.fill;
-  ctx.fillRect(this.posX, this.posY, this.width, this.height);
+  ctx.drawImage(img, this.posX, this.posY, this.width, this.height);
+  // ctx.fillRect(this.posX, this.posY, this.width, this.height);
 };
 
 Obstacle.prototype.move = function(delta) {

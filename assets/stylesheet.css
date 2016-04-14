@@ -1,3 +1,45 @@
+html, body, header, h1, div, canvas {
+  margin: 0;
+  outline: 0;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  text-decoration: inherit;
+  box-sizing: inherit;
+  background: transparent;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+body {
+  font-family: sans-serif;
+  background: lightgray;
+  color: black;
+  width: 100%;
+}
+
+.container {
+  width: 800px;
+  margin: 0 auto;
+}
+
+.container-header {
+  background: lightblue;
+}
+
+.container-header > h1 {
+  font-weight: bold;
+  font-size: 24px;
+  text-align: center;
+}
+
 #canvas {
-  background: yellow;
+  background-image: url(http://orig12.deviantart.net/2aec/f/2008/046/b/b/bb795c6397e964ee.jpg);
+  background-size: cover;
 }

@@ -3,10 +3,22 @@ $(function(){
   var Game = function() {
     this.el = document.getElementById('canvas');
     this.ctx = canvas.getContext('2d');
+    this.renderIntroScreen();
     this.score = 0;
     this.level = 1;
     this.tick = 0;
     this.el.addEventListener("click", this.startGame.bind(this));
+  };
+
+  Game.prototype.renderIntroScreen = function() {
+    this.ctx.fillStyle = "black";
+    this.ctx.font = "italic "+60+"pt Arial Black";
+    this.ctx.fillText("CLOUD JUMPER", 40,200);
+    var high = window.localStorage.highscore;
+    if (high) {
+      this.ctx.font = "italic "+40+"pt Arial Black";
+      this.ctx.fillText("High Score: " + high, 40,260);
+    }
   };
 
   Game.prototype.startGame = function() {
@@ -113,9 +125,9 @@ $(function(){
     } else {
         window.localStorage.setItem("highscore", this.score);
     }
-    document.getElementById('current-score').innerHTML = "You Win!";
+    // document.getElementById('current-score').innerHTML = "You Win!";
     var highScore = window.localStorage.highscore;
-    document.getElementById('high-score').innerHTML = "Your high score: " + highScore;
+    // document.getElementById('high-score').innerHTML = "Your high score: " + highScore;
   };
 
   Game.prototype.checkCollisions = function() {
