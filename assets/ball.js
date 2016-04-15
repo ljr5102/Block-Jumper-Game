@@ -44,11 +44,6 @@ Ball.prototype.checkForAerialCollision = function(aerObj) {
       }
     }
   }
-  // else if (this.yVel === 0) {
-  //   if (this.yPos < 330) {
-  //
-  //   }
-  // }
 };
 
 Ball.prototype.isCollidedWith = function(obj2) {

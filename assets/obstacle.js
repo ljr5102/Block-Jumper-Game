@@ -13,7 +13,6 @@ var Obstacle = function(speed, fill) {
 Obstacle.createRandomObstacles = function(level) {
   var speed;
   var obstc;
-  // http://res.freestockphotos.biz/pictures/10/10675-illustration-of-a-cartoon-cow-pv.png
   var src2 = "images/cow_picture.png";
   var colors = ["red", "orange", "black"];
   var random3 = Math.floor(Math.random() * (3)) + 0;
@@ -52,17 +51,14 @@ Obstacle.createRandomObstacles = function(level) {
 
 Obstacle.prototype.draw = function(ctx) {
   var img = new Image();
-  img.src = "http://res.freestockphotos.biz/pictures/10/10675-illustration-of-a-cartoon-cow-pv.png";
+  img.src = "images/cow_picture.png";
   ctx.fillStyle = this.fill;
   ctx.drawImage(img, this.posX, this.posY, this.width, this.height);
-  // ctx.fillRect(this.posX, this.posY, this.width, this.height);
 };
 
 Obstacle.prototype.move = function(delta) {
   this.posX = this.posX - (this.speed / delta);
 };
-
-
 
 Obstacle.prototype.isCollidedWith = function(obj2) {
   if (obj2.type === "Ball") {

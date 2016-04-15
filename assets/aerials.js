@@ -19,11 +19,9 @@ Aerial.createRandomAerials = function() {
 
 Aerial.prototype.draw = function(ctx) {
   var img = new Image();
-  // http://www.somethingfishy.ie/resources/image_resources/image_cloud.png
   img.src = "images/cloud_picture.png";
   ctx.fillStyle = "gray";
   ctx.drawImage(img, this.posX, this.posY, this.width, this.height);
-  // ctx.fillRect(this.posX, this.posY, this.width, this.height);
 };
 
 Aerial.prototype.move = function(delta) {
@@ -41,13 +39,5 @@ Aerial.prototype.checkSelfCollision = function(otherAer) {
 };
 
 Aerial.prototype.isCollidedWith = function(obj2) {
-  switch (obj2.type) {
-    case "Aerial":
-      if(this.checkSelfCollision(obj2)) {
-        this.markForRemoval = true;
-        obj2.markForRemoval = true;
-      }
-      break;
-
-  }
+  return;
 };

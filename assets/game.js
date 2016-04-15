@@ -27,7 +27,6 @@ $(function(){
     if (!this.started) {
       this.started = true;
       this.initializeGameObjects();
-      document.getElementById('current-score').innerHTML = "Current Score: " + this.score;
       window.addEventListener("keydown", this.handleKeyEvent.bind(this));
       this.draw();
       this.lastTime = 0;
@@ -40,7 +39,6 @@ $(function(){
     this.plat = new Platform();
     this.generateObstacles();
     this.generateAerials();
-    // this.currentObstacle = this.obstacles.shift();
     this.allCurrentObjects = [this.ball, this.plat, this.obstacles.shift()];
   };
 
@@ -62,6 +60,12 @@ $(function(){
 
   Game.prototype.draw = function() {
     this.ctx.clearRect(0, 0, 800, 400);
+    this.ctx.fillStyle = "black";
+    this.ctx.font = "normal "+12+"pt Arial Black";
+    this.ctx.fillText("Score: " + this.score, 10,30);
+    if (window.localStorage.highscore) {
+      this.ctx.fillText("High: " + window.localStorage.highscore, 10,50);
+    }
     for(var i = 0; i < this.allCurrentObjects.length; i++) {
       var obj = this.allCurrentObjects[i];
       obj.draw(this.ctx);
@@ -72,16 +76,6 @@ $(function(){
     this.ball.jump();
   };
 
-  // Game.prototype.removeExitedObstacle = function() {
-  //   for (var i = 0; i < this.allCurrentObjects.length; i++) {
-  //     var currObj = this.allCurrentObjects[i];
-  //     if(currObj.type === "Obstacle") {
-  //       this.allCurrentObjects.splice(i, 1);
-  //       return;
-  //     }
-  //   }
-  // };
-
   Game.prototype.checkOutOfBounds = function() {
     for (var i = 0; i < this.allCurrentObjects.length; i++) {
       var currObj = this.allCurrentObjects[i];
@@ -89,7 +83,6 @@ $(function(){
         case "Obstacle":
           if (currObj.posX + currObj.width < 0) {
             this.score += 1;
-            document.getElementById('current-score').innerHTML = "Current Score: " + this.score;
             this.allCurrentObjects[i] = this.obstacles.shift();
           }
         break;
@@ -101,13 +94,6 @@ $(function(){
         break;
       }
     }
-    // if (this.currentObstacle.posX + this.currentObstacle.width < 0) {
-    //   this.currentObstacle = this.obstacles.shift();
-    //   this.score += 1;
-    //   document.getElementById('current-score').innerHTML = "Current Score: " + this.score;
-    //   this.removeExitedObstacle();
-    //   this.allCurrentObjects.push(this.currentObstacle);
-    // }
   };
 
   Game.prototype.pushInAerials = function() {
@@ -122,21 +108,25 @@ $(function(){
 
   Game.prototype.renderGameOver = function() {
     this.draw();
+    this.ctx.fillStyle = "black";
+    this.ctx.font = "bold "+36+"pt Arial Black";
+    this.ctx.fillText("YOU HIT A COW!", 220,150);
     if (window.localStorage.highscore) {
       var highInt = parseInt(window.localStorage.highscore);
       if (this.score > highInt) {
         window.localStorage.setItem("highscore", this.score);
+        this.ctx.fillStyle = "black";
+        this.ctx.font = "bold "+24+"pt Arial Black";
+        this.ctx.fillText("NEW HIGH SCORE: " + this.score, 260,240);
       }
     } else {
         window.localStorage.setItem("highscore", this.score);
     }
-    // document.getElementById('current-score').innerHTML = "You Win!";
     var highScore = window.localStorage.highscore;
     this.score = 0;
     this.level = 1;
     this.tick = 0;
     this.started = false;
-    // document.getElementById('high-score').innerHTML = "Your high score: " + highScore;
   };
 
   Game.prototype.checkCollisions = function() {
@@ -186,7 +176,6 @@ $(function(){
     this.pushInAerials();
     this.checkCollisions();
     this.checkForRemovals();
-    // this.gameOver();
   };
 
 

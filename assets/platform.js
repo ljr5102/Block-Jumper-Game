@@ -8,12 +8,11 @@ var Platform = function() {
 };
 
 Platform.prototype.draw = function(ctx) {
-  var img = new Image();   // Create new img element
-  // http://us.123rf.com/450wm/punphoto/punphoto1203/punphoto120300222/12930005-green-grass-texture.jpg?ver=6
-  img.src = 'images/grass_picture.jpg';
-  ctx.fillStyle = 'green';
-  ctx.drawImage(img, this.posX, this.posY, this.width, this.height);
-  // ctx.fillRect(this.posX, this.posY, this.width, this.height);
+  var grad = ctx.createLinearGradient(0, 400, 0, this.posY);
+  grad.addColorStop(0, "green");
+  grad.addColorStop(1, "lightgreen");
+  ctx.fillStyle = grad;
+  ctx.fillRect(this.posX, this.posY, this.width, this.height);
 };
 
 Platform.prototype.move = function(delta) {
