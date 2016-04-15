@@ -3,7 +3,7 @@
 [Play Game Here!](http://ljr5102.github.io/Cow-Jumper/)
 
 ## Game View
-![View] (/assets/game_view.png)
+![View] (/assets/images/game_view.png)
 
 ##Summary
 You are a ball sitting on the lawn minding your own business and here come the cows!
