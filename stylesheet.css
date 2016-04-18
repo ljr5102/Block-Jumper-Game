@@ -1,4 +1,5 @@
-html, body, header, h1, div, canvas {
+html, body, header, h1, div, canvas,
+h2, a, ul, li, img, footer {
   margin: 0;
   outline: 0;
   padding: 0;
@@ -9,6 +10,10 @@ html, body, header, h1, div, canvas {
   text-decoration: inherit;
   box-sizing: inherit;
   background: transparent;
+}
+
+ul {
+  list-style: none;
 }
 
 img {
@@ -24,9 +29,47 @@ body {
   width: 100%;
 }
 
+.group:after {
+  display: block;
+  content: "";
+  clear: both;
+}
+
+.footer {
+  margin: 0 auto;
+  width: 800px;
+}
+
+.footer-links {
+  margin: 0 auto;
+  width: 252px;
+}
+
+.footer-links > li {
+  float: left;
+  padding: 0px 5px;
+  margin: 0px 10px;
+}
+
+.footer-links > li > a {
+  padding: 2px;
+  display: block;
+}
+
+.footer-links > li > a:hover {
+  background: yellow;
+  border-radius: 3px;
+}
+
+.footer-links > li > a > img {
+  width: 50px;
+}
+
 .container {
   width: 800px;
   margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 #canvas {
