@@ -1,6 +1,6 @@
 # Cow Jumper
 
-[Play Game Here!](http://ljr5102.github.io/Cow-Jumper/)
+[Play Game Here!](http://louisrobinson.io/Cow-Jumper/)
 
 ## Game View
 ![View] (/assets/images/game_view.png)
