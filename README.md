@@ -6,7 +6,7 @@
 ![View] (/assets/images/game_view.png)
 
 ## Summary
-You are a ball sitting on the lawn minding your own business and here come the cows!
+You are a pig head sitting on the lawn minding your own business and here come the cows!
 Avoid the cows by jumping over them.  Be warned, these aren't your average cows...
 
 ## How to Play
