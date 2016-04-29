@@ -73,6 +73,6 @@ body {
 }
 
 #canvas {
-  background-image: url(./assets/images/game_background.jpg);
+  background-image: url(./images/game_background.jpg);
   background-size: cover;
 }
